@@ -1,0 +1,795 @@
+<!DOCTYPE html><html lang="en"><head>
+    <title>Dataviz covid-19 </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Essential JS 2 DashboardLayout Component">
+    <meta name="author" content="Syncfusion">
+    <link href="index.css" rel="stylesheet">
+    <link href="//cdn.syncfusion.com/ej2/ej2-base/styles/material.css" rel="stylesheet">
+    <link href="//cdn.syncfusion.com/ej2/ej2-layouts/styles/material.css" rel="stylesheet">
+    
+    
+    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    />
+
+    <link
+    rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+    href="https://fonts.googleapis.com/css?family=Titillium+Web:400,600,700"
+    rel="stylesheet"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="assets/styles.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+<style>
+    #container {
+    margin: 0 auto;
+    width: 950px;
+    }
+    #dashboard_default .e-panel { 
+    transition:none !important; 
+    }
+</style>
+</head>
+<body>
+    <div id="container">
+        <div class="jumbotron">
+            <div class="row">
+               <div class="col-md-9">
+                  <h1>Covid data analysis</h1>
+               </div>
+               <div class="col-md-3">
+                    <select class="custom-select custom-select-lg" id="file-data">
+                        <option selected>Choose Data...</option>
+                        <option value="2022-01-18-145515.csv">2022-01-18</option>
+                        <option value="2022-01-19-100418.csv">2022-01-19</option>
+                        <option value="2022-01-20-145521.csv">2022-01-20</option>
+                    </select> 
+               </div>
+            </div>
+            
+        </div>
+        <div id="dashboard_default"></div><br>
+        <div class="card">
+          <div class="card-header">
+            Report coronavirus cases 
+          </div>
+          <div class="card-body">
+            <div id='body-table' class="e-panel-container">
+          
+            </div>
+          </div>
+        </div>
+        
+    </div>
+
+<script>
+var ele = document.getElementById('container');
+if(ele) {
+    ele.style.visibility = "visible";
+ }   
+        </script>
+<script type="text/javascript">
+    //Dashboard Layout's resizestart event function
+    function onResizeStart(args) {
+        console.log("Resize start");
+    }
+
+    //Dashboard Layout's resize event function
+    function onResize(args) {
+        console.log("Resizing");
+    }
+
+    //Dashboard Layout's resizestop event function
+    function onResizeStop(args) {
+        console.log("Resize stop");
+    }
+    var dashboard  = new ej.layouts.DashboardLayout({
+    cellSpacing: [10, 10],
+    columns:12,
+    allowResizing: true,
+    resizeStart: onResizeStart,
+    resize: onResize,
+    resizeStop: onResizeStop,
+    resizableHandles: ['e-south-east','e-east','e-west','e-north','e-south'],
+    panels: [
+    {'id':'Panel2', 'sizeX': 6, 'sizeY': 5,'row': 0, 'col': 0, header:'<div><select class="custom-select custom-select-sm" id="select-chart-1" style="width: 70px;float: right"><option selected>Type...</option><option value="pie">Pie</option><option value="pie2">Donout</option><option value="barv0">Bar v</option> <option value="barv1">Bar H</option> <option value="radar">radar</option>  </select> </div>', content:'<div class="content" id="donut1"><div>'},
+    {'id':'Panel3', 'sizeX': 6, 'sizeY': 5,'row': 0, 'col': 6, header:'<div><select class="custom-select custom-select-sm" id="select-chart-2" style="width: 70px;float: right"><option selected>Type...</option><option value="pie">Pie</option><option value="pie2">Donout</option><option value="barv0">Bar v</option> <option value="barv1">Bar H</option> <option value="radar">radar</option>  </select></div>', content:'<div class="content" id="donut"><div>'},
+    {'id':'Panel1', 'sizeX': 12, 'sizeY': 6,'row': 5, 'col': 0, header:'<div><select class="custom-select custom-select-sm" id="select-chart-3" style="width: 70px;float: right"><option selected>Type...</option><option value="pie">Pie</option><option value="pie2">Donout</option><option value="barv0">Bar v</option> <option value="barv1">Bar H</option> <option value="radar">radar</option>  </select></div>', content:'<div class="content" id="bar"><div>'},
+    {'id':'Panel4', 'sizeX': 12, 'sizeY': 5,'row': 12, 'col': 0, header:'<div></div>', content:'<div class="content" id="chart4"><div>'},
+    ]
+});
+// render initialized dashboardlayout
+dashboard.appendTo('#dashboard_default');
+</script>
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="dist/apexcharts.js"></script>
+<script src="assets/data.js"></script>
+<script src="assets/scripts.js"></script>   
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.tutorialjinni.com/jquery-csv/1.0.21/jquery.csv.js	"></script>
+<script src="https://cdn.tutorialjinni.com/jquery-csv/1.0.21/jquery.csv.min.js	"></script>
+<script>
+
+
+let url = "data/2022-01-18-145515.csv";
+
+chart1 = (countrys = [], newCases = [], newRecovered =[])=>{
+    var optionsBar = {
+  chart: {
+    type: 'bar',
+    height: 380,
+    width: '100%',
+    stacked: true,
+  },
+  plotOptions: {
+    bar: {
+      columnWidth: '45%',
+    }
+  },
+  colors: colorPalette,
+  series: [{
+    name: "new Cases",
+    data: newCases,
+  }, {
+    name: "new Recovered",
+    data: newRecovered,
+  }],
+  labels: [10,11,12,13,14,15,16,17,18,19,20,21,22,23],
+  xaxis: {
+    categories: countrys,
+    labels: {
+      show: false
+    },
+    axisBorder: {
+      show: false
+    },
+    axisTicks: {
+      show: false
+    },
+  },
+  yaxis: {
+    axisBorder: {
+      show: false
+    },
+    axisTicks: {
+      show: false
+    },
+    labels: {
+      style: {
+        colors: '#78909c'
+      }
+    }
+  },
+  title: {
+    text: 'New Cases & New Recovered',
+    align: 'left',
+    style: {
+      fontSize: '18px'
+    }
+  }
+
+  }
+    $('#bar').empty();
+    var chartBar = new ApexCharts(document.querySelector('#bar'), optionsBar);
+    chartBar.render();
+ }
+
+ chart2 = (values) => {
+    var optionDonut = {
+    chart: {
+        type: 'donut',
+        width: '100%',
+        height: 400
+    },
+    dataLabels: {
+        enabled: false,
+    },
+    plotOptions: {
+        pie: {
+        customScale: 0.8,
+        },
+        stroke: {
+        colors: undefined
+        }
+    },
+    colors: colorPalette,
+    title: {
+        text: 'Total cases with region',
+        style: {
+        fontSize: '18px'
+        }
+    },
+    series: [values['Africa'], values['Americas'], values['EasternMediterranean'], values['Europe'], values['South-EastAsia'], values['WesternPacific']],
+    labels: ['Africa', 'Americas', 'EasternMediterranean', 'Europe', 'South-EastAsia', 'WesternPacific'],
+    legend: {
+        position: 'left',
+        offsetY: 80
+    }
+        }
+        $('#donut').empty();
+
+        var donut = new ApexCharts(
+        document.querySelector("#donut"),
+        optionDonut
+        )
+        donut.render();
+ }
+
+ //
+ chart21 = (values) => {
+    var optionDonut = {
+    chart: {
+        type: 'pie',
+        width: '100%',
+        height: 400
+    },
+    dataLabels: {
+        enabled: false,
+    },
+    plotOptions: {
+        pie: {
+        customScale: 0.8,
+        },
+        stroke: {
+        colors: undefined
+        }
+    },
+    colors: colorPalette,
+    title: {
+        text: 'Total cases with region',
+        style: {
+        fontSize: '18px'
+        }
+    },
+    series: [values['Africa'], values['Americas'], values['EasternMediterranean'], values['Europe'], values['South-EastAsia'], values['WesternPacific']],
+    labels: ['Africa', 'Americas', 'EasternMediterranean', 'Europe', 'South-EastAsia', 'WesternPacific'],
+    legend: {
+        position: 'left',
+        offsetY: 80
+    }
+        }
+        $('#donut').empty();
+
+        var donut = new ApexCharts(
+        document.querySelector("#donut"),
+        optionDonut
+        )
+        donut.render();
+ }
+
+ //
+//
+chart23 = (values) => { 
+    var options = {
+          series: [{
+          data:  [values['Africa'], values['Americas'], values['EasternMediterranean'], values['Europe'], values['South-EastAsia'], values['WesternPacific']]
+        }],
+          chart: {
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 4,
+            horizontal: true,
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        title: {
+          text: 'Total cases with region',
+            align: 'left',
+            style: {
+            fontSize: '18px'
+            }
+        },
+        xaxis: {
+          categories: ['Africa', 'Americas', 'EasternMediterranean', 'Europe', 'South-EastAsia', 'WesternPacific'],
+        }
+        };
+        $('#donut').empty();
+        var chart = new ApexCharts(document.querySelector("#donut"), options);
+        chart.render();
+ }
+ //
+ chart24 = (values) => { 
+    var options = {
+          series: [{
+          data:  [values['Africa'], values['Americas'], values['EasternMediterranean'], values['Europe'], values['South-EastAsia'], values['WesternPacific']]
+        }],
+          chart: {
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 4,
+            horizontal: false,
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        title: {
+          text: 'Total cases with region',
+            align: 'left',
+            style: {
+            fontSize: '18px'
+            }
+        },
+        xaxis: {
+          categories: ['Africa', 'Americas', 'EasternMediterranean', 'Europe', 'South-EastAsia', 'WesternPacific'],
+        }
+        };
+        $('#donut').empty();
+        var chart = new ApexCharts(document.querySelector("#donut"), options);
+        chart.render();
+ }
+ //
+ chart25 = (values) => { 
+    var options = {
+          series: [{
+          name: 'Series 1',
+          data: [values['Africa'], values['Americas'], values['EasternMediterranean'], values['Europe'], values['South-EastAsia'], values['WesternPacific']],
+        }],
+          chart: {
+          height: 350,
+          type: 'radar',
+        },
+        title: {
+          text: 'Total cases with region',
+            align: 'left',
+            style: {
+            fontSize: '18px'
+            }
+        },
+        xaxis: {
+          categories: ['Africa', 'Americas', 'EasternMediterranean', 'Europe', 'South-EastAsia', 'WesternPacific']
+        }
+    };
+    $('#donut').empty();
+    var chart = new ApexCharts(document.querySelector("#donut"), options);
+    chart.render();
+ }
+ //
+ //
+ chart3 = (values) => {
+    var options = {
+          series: [values['Africa'], values['Americas'], values['EasternMediterranean'], values['Europe'], values['South-EastAsia'], values['WesternPacific']],
+          chart: {
+          width: 400,
+          height: 1000,
+          type: 'pie',
+        },
+        labels: ['Africa', 'Americas', 'EasternMediterranean', 'Europe', 'South-EastAsia', 'WesternPacific'],
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }],
+        title: {
+            text: 'New Cases with Region',
+            align: 'left',
+            style: {
+            fontSize: '18px'
+            }
+        }
+        };
+        $('#donut1').empty();
+        var donut = new ApexCharts(
+        document.querySelector("#donut1"),
+        options
+        )
+        donut.render();
+ }
+ //
+ chart32 = (values) => {
+    var options = {
+          series: [values['Africa'], values['Americas'], values['EasternMediterranean'], values['Europe'], values['South-EastAsia'], values['WesternPacific']],
+          chart: {
+          width: 400,
+          height: 1000,
+          type: 'donut',
+        },
+        labels: ['Africa', 'Americas', 'EasternMediterranean', 'Europe', 'South-EastAsia', 'WesternPacific'],
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }],
+        title: {
+            text: 'New Cases with Region',
+            align: 'left',
+            style: {
+            fontSize: '18px'
+            }
+        }
+        };
+        $('#donut1').empty();
+        var donut = new ApexCharts(
+        document.querySelector("#donut1"),
+        options
+        )
+        donut.render();
+ }
+ //
+ chart33 = (values) => { 
+    var options = {
+          series: [{
+          data:  [values['Africa'], values['Americas'], values['EasternMediterranean'], values['Europe'], values['South-EastAsia'], values['WesternPacific']]
+        }],
+          chart: {
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 4,
+            horizontal: true,
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        title: {
+            text: 'New Cases with Region',
+            align: 'left',
+            style: {
+            fontSize: '18px'
+            }
+        },
+        xaxis: {
+          categories: ['Africa', 'Americas', 'EasternMediterranean', 'Europe', 'South-EastAsia', 'WesternPacific'],
+        }
+        };
+        $('#donut1').empty();
+        var chart = new ApexCharts(document.querySelector("#donut1"), options);
+        chart.render();
+ }
+ //
+ chart34 = (values) => { 
+    var options = {
+          series: [{
+          data:  [values['Africa'], values['Americas'], values['EasternMediterranean'], values['Europe'], values['South-EastAsia'], values['WesternPacific']]
+        }],
+          chart: {
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 4,
+            horizontal: false,
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        title: {
+            text: 'New Cases with Region',
+            align: 'left',
+            style: {
+            fontSize: '18px'
+            }
+        },
+        xaxis: {
+          categories: ['Africa', 'Americas', 'EasternMediterranean', 'Europe', 'South-EastAsia', 'WesternPacific'],
+        }
+        };
+        $('#donut1').empty();
+        var chart = new ApexCharts(document.querySelector("#donut1"), options);
+        chart.render();
+ }
+ //
+ chart35 = (values) => { 
+    var options = {
+          series: [{
+          name: 'Series 1',
+          data: [values['Africa'], values['Americas'], values['EasternMediterranean'], values['Europe'], values['South-EastAsia'], values['WesternPacific']],
+        }],
+          chart: {
+          height: 350,
+          type: 'radar',
+        },
+        title: {
+            text: 'New Cases with Region',
+            align: 'left',
+            style: {
+            fontSize: '18px'
+            }
+        },
+        xaxis: {
+          categories: ['Africa', 'Americas', 'EasternMediterranean', 'Europe', 'South-EastAsia', 'WesternPacific']
+        }
+    };
+    $('#donut1').empty();
+    var chart = new ApexCharts(document.querySelector("#donut1"), options);
+    chart.render();
+ }
+ //
+ function generateData(baseval, count, data, totalNumberCases, yrange) {
+    var i = 0;
+    var series = [];
+    while (i < count) {
+      var x = Math.floor(Math.random() * (750 - 1 + 1)) + 1;;
+      var y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
+      var z = Math.floor((data[i]));
+      series.push([x, y, z]);
+      baseval += 86400000;
+      i++;
+    }
+    return series;
+  }
+
+ //
+ chart4 = (data, confData,totalDeaths, totalTests, totalRecovered , region, totalNumberCases) => {
+    var options = {
+          series: [{
+          name: 'total cases',
+          data:  generateData(new Date('11 Feb 2017 GMT').getTime(), data.length, data, totalNumberCases , {
+            min: 10,
+            max: 331747431
+          })
+        },
+        {
+          name: 'Active cases',
+          data:  generateData(new Date('11 Feb 2017 GMT').getTime(), data.length, confData, totalNumberCases , {
+            min: 10,
+            max: 331747431
+          })
+        },
+        {
+          name: 'total Deaths',
+          data:  generateData(new Date('11 Feb 2017 GMT').getTime(), data.length, totalDeaths, totalNumberCases , {
+            min: 10,
+            max: 331747431
+          })
+        },
+        {
+          name: 'total Recovered',
+          data:  generateData(new Date('11 Feb 2017 GMT').getTime(), data.length, totalRecovered, totalNumberCases , {
+            min: 10,
+            max: 331747431
+          })
+        },
+    ],
+          chart: {
+            height: 350,
+            type: 'bubble',
+        },
+      //  labels: region,
+        dataLabels: {
+            enabled: false
+        },
+        fill: {
+            opacity: 0.8
+        },
+        title: {
+            text: 'Covid Cases'
+        },
+        xaxis: {
+            tickAmount: 12,
+            type: 'category',
+        },
+        yaxis: {
+            max: 331747431
+        }
+        };
+        $('#chart4').empty();
+        var chart = new ApexCharts(document.querySelector("#chart4"), options);
+        chart.render();
+ }
+let dt = [];
+countrysNew = []
+newCases = []
+newRecovered = []
+caseswithregion = []
+newcaseswithregion = []
+totalCases = []
+totalRegion = []
+confData = []
+totalDeaths = []
+totalTests = []
+totalRecovered = []
+totalNumberCases = 0;
+getData = (url) => {
+  txt = `<table 
+          id="example" 
+          cellspacing="0" 
+          width="100%" 
+          data-scroll-x="true"
+          scroll-collapse="false">
+            <thead>
+                <tr>
+                    <th>Country</th>
+                    <th>TotalCases</th>
+                    <th>TotalDeaths</th>
+                    <th>TotalRecovered</th>
+                    <th>TotalTests</th>
+                    <th>ActiveCases</th>
+                    <th>Continent</th>
+                    <th>Deaths/1M pop</th>
+                    <th>NewCases</th>
+                    <th>NewDeaths</th>
+                    <th>NewRecovered</th>
+                    <th>Population</th>
+                    <th>Serious,Critical</th>
+                    <th>Tests/1M pop</th>
+                    <th>Tot Cases/1M pop</th>
+                </tr>
+            </thead>
+            <tbody>`;
+    $.ajax({
+        type: 'GET',
+        url : url,
+        crossDomain: true,
+        success: function(data) { 
+            console.log($.csv.toObjects(data));
+            data = $.csv.toObjects(data)
+            data.map((el)=> {
+              txt += `
+                <tr>
+                    <td>${el['Country/Region']}</td>
+                    <td>${el['TotalCases']}</td>
+                    <td>${el['TotalDeaths']}</td>
+                    <td>${el['TotalRecovered']}</td>
+                    <td>${el['TotalTests']}</td>
+                    <td>${el['ActiveCases']}</td>
+                    <td>${el['Continent']}</td>
+                    <td>${el['Deaths/1M pop']}</td>
+                    <td>${el['NewCases']}</td>
+                    <td>${el['NewDeaths']}</td>
+                    <td>${el['NewRecovered']}</td>
+                    <td>${el['Population']}</td>
+                    <td>${el['Serious,Critical']}</td>
+                    <td>${el['Tests/1M pop']}</td>
+                    <td>${el['Tot Cases/1M pop']}</td>
+                </tr>
+                  `
+              //  var x = Math.floor(Math.random() * (750 - 1 + 1)) + 1;;
+              //  var y = Math.floor(Math.random() * (60 - 10 + 1)) + 10;
+                totalCases.push(el['TotalCases'])
+                confData.push(el['ActiveCases'])
+                totalDeaths.push(el['TotalDeaths'])
+                totalTests.push(el['TotalTests'])
+                totalRecovered.push(el['TotalRecovered'])
+                totalNumberCases += parseInt(el['TotalCases'])
+                totalRegion.push(el['Country/Region'])
+                if (caseswithregion[el['WHO Region']]) {
+                    caseswithregion[el['WHO Region']] += parseInt(el['TotalCases']);
+                }else {
+                    caseswithregion[el['WHO Region']] = parseInt(el['TotalCases']);
+                }
+                if (newcaseswithregion[el['WHO Region']]) {
+                    newcaseswithregion[el['WHO Region']] += parseInt(el['NewCases']);
+                }else {
+                    newcaseswithregion[el['WHO Region']] = parseInt(el['NewCases']);
+                }
+                if (el.NewCases != 0) {
+                    newCases.push(el['NewCases'])
+                    newRecovered.push(el['NewRecovered'])
+                    countrysNew.push(el['Country/Region'])    
+                    return {
+                        'country' : el['Country/Region'],
+                        'newCase': el['NewCases'],
+                        'newRecovered': el['NewRecovered'],
+
+                    }
+                }
+            });
+        txt += `</tbody>
+            <tfoot>
+                <tr>
+                  <th>Country</th>
+                  <th>TotalCases</th>
+                  <th>TotalDeaths</th>
+                  <th>TotalRecovered</th>
+                  <th>TotalTests</th>
+                  <th>ActiveCases</th>
+                  <th>Continent</th>
+                  <th>Deaths/1M pop</th>
+                  <th>NewCases</th>
+                  <th>NewDeaths</th>
+                  <th>NewRecovered</th>
+                  <th>Population</th>
+                  <th>Serious,Critical</th>
+                  <th>Tests/1M pop</th>
+                  <th>Tot Cases/1M pop</th>
+                </tr>
+            </tfoot>
+        </table>`
+        chart1(countrysNew, newCases, newRecovered)
+        values = caseswithregion;
+        chart2(caseswithregion);
+        chart3(newcaseswithregion);
+        chart4(totalCases, confData,totalDeaths, totalTests, totalRecovered , totalRegion, totalNumberCases);
+        $('#body-table').html(txt);
+        $('#example').DataTable();
+     }    
+    });  
+   
+}
+
+$(document).ready( function () {
+    url = "data/2022-01-18-145515.csv";
+    getData(url);
+    $('#example').DataTable();
+    $("#file-data").change(function() {
+        url= 'data/'+$("#file-data").val();
+        getData(url);
+    });
+
+    $("#select-chart-1").change(function() {
+        val = $("#select-chart-1").val()
+        if (val == 'pie') {
+            chart3(newcaseswithregion);
+        }
+        if (val == 'pie2') {
+            chart32(newcaseswithregion);
+        }
+        console.log(val);
+        if (val == 'barv1') {
+            chart33(newcaseswithregion);
+        }
+        if (val == 'barv0') {
+            chart34(newcaseswithregion);
+        }
+        if (val == 'radar') {
+            chart35(newcaseswithregion);
+        }
+    });        
+    $("#select-chart-2").change(function() {
+        val = $("#select-chart-2").val()
+        console.log(val);
+        if (val == 'pie') {
+            chart21(caseswithregion);
+        }
+        if (val == 'pie2') {
+            chart2(caseswithregion);
+        }
+        console.log(val);
+        if (val == 'barv1') {
+            chart23(caseswithregion);
+        }
+        if (val == 'barv0') {
+            chart24(caseswithregion);
+        }
+        if (val == 'radar') {
+            chart25(caseswithregion);
+        }
+    }); 
+} );
+
+
+</script>
+
+
+</body>
+</html>
